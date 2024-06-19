@@ -28,6 +28,10 @@ public class AnimalController : MonoBehaviour
             AnimalFullEvent.Invoke(Score);
             Destroy(other.gameObject);
             Destroy(gameObject);
+        }else if(other.tag == "Animal Destroyer")
+        {
+            Destroy(gameObject);
         }
     }
+
 }

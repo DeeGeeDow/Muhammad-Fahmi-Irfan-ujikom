@@ -20,7 +20,7 @@ public class PlayerThrowController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-            Instantiate(food, transform.position, Quaternion.identity);
+            Instantiate(food, transform.position + new Vector3(0,1,0), Quaternion.identity);
         }
     }
 }
