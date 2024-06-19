@@ -26,6 +26,6 @@ public class AnimalSpawner : MonoBehaviour
     {
         int animal_idx = Random.Range(0, animals.Count);
         float position = Random.Range(LeftMostPosition, RightMostPosition);
-        Instantiate(animals[animal_idx], transform.position + Vector3.right*position, Quaternion.Euler(0,180,0));
+        GameObject animal = Instantiate(animals[animal_idx], transform.position + Vector3.right*position, Quaternion.Euler(0,180,0));
     }
 }

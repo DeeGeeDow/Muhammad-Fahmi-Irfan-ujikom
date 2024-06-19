@@ -6,10 +6,11 @@ public class PlayerMovementController : MonoBehaviour
 {
     public Vector3 movementDirection;
     public float speed = 50;
-
+    private Animator animator;
     private void Start()
     {
         movementDirection = Vector3.zero;
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -32,6 +33,7 @@ public class PlayerMovementController : MonoBehaviour
             movementDirection = Vector3.zero;
         }
 
+        animator.SetFloat("moveToRight", movementDirection.x);
         transform.position += movementDirection * speed * Time.deltaTime;
     }
 }

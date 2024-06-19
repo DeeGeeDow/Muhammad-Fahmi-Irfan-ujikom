@@ -9,11 +9,11 @@ public class AnimalController : MonoBehaviour
     public float speed;
     public int HungerNeed;
     public int Score;
-    public UnityEvent<int> AnimalFullEvent;
+    private int hunger = 0;
     
     private void Start()
     {
-        
+        hunger = 0;
     }
 
     private void Update()
@@ -25,9 +25,14 @@ public class AnimalController : MonoBehaviour
     {
         if(other.tag == "Food")
         {
-            AnimalFullEvent.Invoke(Score);
+            hunger += other.GetComponent<FoodController>().hungerValue;
+            if(hunger >= HungerNeed)
+            {
+                GameManager.Instance.Score += Score;
+                Destroy(gameObject);
+            }
             Destroy(other.gameObject);
-            Destroy(gameObject);
+
         }else if(other.tag == "Animal Destroyer")
         {
             Destroy(gameObject);

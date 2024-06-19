@@ -7,6 +7,7 @@ public class FoodController : MonoBehaviour
     public float speed;
     public float duration;
     public float timer = 0;
+    public int hungerValue = 25;
     // Start is called before the first frame update
     void Start()
     {
