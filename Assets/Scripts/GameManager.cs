@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using Unity.VisualScripting.AssemblyQualifiedNameParser;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public enum State
 {
@@ -26,6 +27,8 @@ public class GameManager : MonoBehaviour
         }
     }
     [SerializeField] private int _score = 0;
+    private GameObject _player;
+    private GameObject _animalSpawner;
     public int Score {
         get => _score;
         set
@@ -39,6 +42,9 @@ public class GameManager : MonoBehaviour
     [Header("UI")]
     public TMP_Text scoreText;
     public TMP_Text timerText;
+
+    public GameObject PlayUI;
+    public GameObject GameOverUI;
     private void Start()
     {
         if(Instance != null)
@@ -49,8 +55,21 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
-        GameState = State.Play;
+        StartGame();
         DontDestroyOnLoad(gameObject);
+    }
+
+    public void StartGame()
+    {
+        Timer = 60;
+        Score = 0;
+        GameState = State.Play;
+        _player = GameObject.FindGameObjectWithTag("Player");
+        _animalSpawner = GameObject.FindGameObjectWithTag("Animal Spawner");
+        PlayUI = GameObject.FindGameObjectWithTag("Play UI");
+        GameOverUI = GameObject.FindGameObjectWithTag("Game Over UI");
+        scoreText = GameObject.FindGameObjectWithTag("Score UI").GetComponent<TMP_Text>();
+        timerText = GameObject.FindGameObjectWithTag("Timer UI").GetComponent<TMP_Text>();
     }
 
     private void Update()
@@ -81,7 +100,24 @@ public class GameManager : MonoBehaviour
         }
         else if(GameState == State.GameOver)
         {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>().SetTrigger("gameOver");
+            PlayUI.SetActive(false);
+            GameOverUI.SetActive(true);
+            GameObject.FindGameObjectWithTag("Score Game Over UI").GetComponent<TMP_Text>().text = $"Score: {Score}";
+            _player.GetComponent<Animator>().SetTrigger("gameOver");
+            _player.GetComponent<PlayerMovementController>().enabled = false;
+            _player.GetComponent<PlayerThrowController>().enabled = false;
+            _animalSpawner.SetActive(false);
         }
+    }
+
+    public void Retry()
+    {
+        SceneManager.LoadScene("Gameplay");
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("Main Menu");
+        Destroy(this);
     }
 }

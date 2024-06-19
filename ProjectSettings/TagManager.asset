@@ -6,6 +6,12 @@ TagManager:
   tags:
   - Food
   - Animal Destroyer
+  - Animal Spawner
+  - Play UI
+  - Score UI
+  - Timer UI
+  - Game Over UI
+  - Score Game Over UI
   layers:
   - Default
   - TransparentFX
